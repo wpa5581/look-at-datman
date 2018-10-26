@@ -1,4 +1,4 @@
-create table customer (
+create table if not exists customer (
   id int primary key,
   income int,
   name varchar(255),
@@ -7,40 +7,40 @@ create table customer (
   address_street varchar(255),
   address_state varchar(255),
   address_zipcode varchar(255)
-)
+);
 
-create table dealer (
+create table if not exists dealer (
   id int primary key,
   name varchar(255),
   phone varchar(255)
-)
+);
 
-create table brand (
+create table if not exists brand (
   name varchar(255) primary key,
   country varchar(255),
   reliability varchar(255)
-)
+);
 
-create table sale (
+create table if not exists sale (
   id int primary key,
-  customer int foreign key references customer(id)
-)
+  customer int references customer(id),
+  dealer int references dealer(id)
+);
 
-create table vehicle (
+create table if not exists vehicle (
   vin int primary key,
   model varchar(255),
   transmission varchar(255),
   mileage int,
-  transmission varchar(255),
   engine varchar(255),
   color varchar(255),
-  brand varchar(255) foreign key references brand(name),
-  dealer int foreign key references dealer(id),
-  sale int foreign key references sale(id),
-  customer int foreign key references customer(id)
-)
+  brand varchar(255) references brand(name),
+  dealer int references dealer(id),
+  sale int references sale(id),
+  customer int references customer(id)
+);
 
-create table brand_dealer (
-  brand varchar(255) foreign key references brand(name),
-  dealer int foreign key references dealer(id)
-)
+create table if not exists brand_dealer (
+  brand varchar(255) references brand(name),
+  dealer int references dealer(id)
+);
